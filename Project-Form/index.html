@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Company - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hidden { display: none; }
+        .showPass {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="J logo.jpg" class="logo" alt="J Company Logo" />
+            <h1>J Company</h1>
+        </div>
+        <div class="nav-right">
+            <p id="loginNav" style="cursor:pointer; color:#ffd700;">Login</p>
+            <p id="signupNav" style="cursor:pointer;">Signup</p>
+        </div>
+    </nav>
+
+    <main>
+        <div class="login-container">
+            <h2 id="formTitle">Login</h2>
+            <!-- Login Form -->
+            <form class="login-form" id="loginForm">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" name="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" name="email" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your mobile number" name="phone" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" name="password" required>
+                <div class="showPass">
+                    <input type="checkbox" id="showPass">
+                    <label for="showPass">Show Password</label>
+                </div>
+                <div class="error-message" id="error" style="display: none;">Your password is wrong</div>
+
+                <button type="submit">Login</button>
+                <p class="signup-link">Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+            </form>
+
+            <!-- Signup Form (hidden by default) -->
+            <form class="login-form hidden" id="signupForm">
+                <label for="newname">Name</label>
+                <input type="text" id="newname" placeholder="Enter your name" name="newname" required>
+
+                <label for="newemail">Email</label>
+                <input type="email" id="newemail" placeholder="Enter your email" name="newemail" required>
+
+                <label for="newphone">Phone Number</label>
+                <input type="tel" id="newphone" placeholder="Enter your mobile number" name="newphone" required>
+
+                <label for="newpassword">Password</label>
+                <input type="password" id="newpassword" placeholder="Create a password" name="newpassword" required>
+
+                <label for="confirmpassword">Confirm Password</label>
+                <input type="password" id="confirmpassword" placeholder="Confirm your password" name="confirmpassword" required>
+
+                <button type="submit">Sign up</button>
+                <p class="signup-link">Already have an account? <a href="#" id="loginLink">Login</a></p>
+            </form>
+        </div>
+    </main>
+    <script>
+        // Toggle between Login and Signup forms
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const formTitle = document.getElementById('formTitle');
+        const signupLink = document.getElementById('signupLink');
+        const loginLink = document.getElementById('loginLink');
+        const signupNav = document.getElementById('signupNav');
+        const loginNav = document.getElementById('loginNav');
+
+        function showLogin() {
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            formTitle.textContent = "Login";
+            loginNav.style.color = "#ffd700";
+            signupNav.style.color = "";
+        }
+        function showSignup() {
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            formTitle.textContent = "Sign Up";
+            signupNav.style.color = "#ffd700";
+            loginNav.style.color = "";
+        }
+
+        // Ensure only login is shown on page load
+        showLogin();
+
+        signupLink.onclick = function(e) { e.preventDefault(); showSignup(); }
+        signupNav.onclick = function() { showSignup(); }
+        loginLink.onclick = function(e) { e.preventDefault(); showLogin(); }
+        loginNav.onclick = function() { showLogin(); }
+
+        // Show/hide password for login form
+        document.getElementById('showPass').addEventListener('change', function() {
+            var pwd = document.getElementById('password');
+            pwd.type = this.checked ? "text" : "password";
+        });
+
+        // Simple password check for login form
+        loginForm.onsubmit = function(event) {
+            var password = document.getElementById('password').value;
+            var errorDiv = document.getElementById('error');
+            var correctPassword = "12345";
+            if (password !== correctPassword) {
+                errorDiv.style.display = "block";
+                event.preventDefault();
+            } else {
+                errorDiv.style.display = "none";
+            }
+        };
+
+        // Prevent default submit for signup (demo only)
+        signupForm.onsubmit = function(event) {
+            event.preventDefault();
+            alert("Signup successful! (Demo)");
+            showLogin();
+        };
+    </script>
+</body>
+</html>
